@@ -17,9 +17,9 @@ export class Lambda extends lambda.Function {
             timeout: cdk.Duration.seconds(30),
             logGroup: new logs.LogGroup(scope, id+'-LogGroup', {
                 retention: logs.RetentionDays.TWO_WEEKS,
-                logGroupName: id+'-LogGroup',
+                logGroupName: id+'-log-group',
             }),
-            role: new iam.Role(scope, id+'-Role', {
+            role: new iam.Role(scope, id+'-role', {
                 assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
             }),
             loggingFormat: lambda.LoggingFormat.JSON,

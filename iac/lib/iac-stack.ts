@@ -1,9 +1,11 @@
 import * as cdk from 'aws-cdk-lib';
-import * as apigateway from 'aws-cdk-lib/aws-apigateway';
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
 import { Construct } from 'constructs';
 import * as path from 'path';
 import { Lambda } from './common/compute/lambda'
+import { DynamoDB } from './common/storage/dynamodb'
+import { EventBus } from './common/communication/eventbridge'
 
 // import * as sqs from 'aws-cdk-lib/aws-sqs';
 
@@ -28,6 +30,18 @@ export class CloudCostAuditorStack extends cdk.Stack {
       handler: 'main',
       code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler'))
     });
+
+    const dynamodbTable = new DynamoDB(this, 'ResourceTable', {
+      partitionKey: { name: 'pk', type: dynamodb.AttributeType.STRING },
+      sortKey: { name: 'sk', type: dynamodb.AttributeType.STRING },
+    });
+
+    const eventBus = new EventBus(this, 'EventBus', {});
+
+
+    
+
+
 
     
     
