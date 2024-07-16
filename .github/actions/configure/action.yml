@@ -1,0 +1,21 @@
+name: Configure Environment
+description: Configures the environment, downloads go.mod, and installs tools
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Go
+      uses: actions/setup-go@v4
+      with:
+        go-version: '1.20'
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm ci
+      shell: bash
+    - run: npm i -g cdk
+      shell: bash
+    - name: Configure Git and Dependencies
+      run: make configure
+      shell: bash

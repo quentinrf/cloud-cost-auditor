@@ -1,0 +1,29 @@
+name: Push Workflow
+run-name: Initiated by ${{ github.actor }}
+on:
+  workflow_dispatch:
+  workflow_call:
+  push:
+    branches:
+      - "main"
+
+concurrency:
+  # New commit on branch cancels running workflows of the same branch
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  deploy-to-alpha:
+    name: Deploy to Alpha
+    runs-on: ubuntu-latest
+    environment: alpha
+    strategy:
+      matrix:
+        region: [us-east-2]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/configure
+      - uses: ./.github/actions/build-go
+    permissions:
+      id-token: write # This is required for requesting the JWT
+      contents: read # This is required for actions/checkout

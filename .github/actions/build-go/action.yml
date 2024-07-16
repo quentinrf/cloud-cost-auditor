@@ -1,0 +1,9 @@
+name: Build Go Binaries
+description: Executes the `make build` command
+
+runs:
+  using: "composite"
+  steps:
+    - name: Build
+      run: make build
+      shell: bash

@@ -37,18 +37,5 @@ export class CloudCostAuditorStack extends cdk.Stack {
     });
 
     const eventBus = new EventBus(this, 'EventBus', {});
-
-
-    
-
-
-
-    
-    
-    
-    
-    
-
-    
   }
 }
