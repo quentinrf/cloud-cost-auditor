@@ -4,6 +4,12 @@ import * as cdk from 'aws-cdk-lib';
 import { CloudCostAuditorStack } from '../lib/iac-stack';
 
 const app = new cdk.App();
-new CloudCostAuditorStack(app, 'IacStack', {
-  env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION }
+
+const stage = app.node.tryGetContext('stage');
+const region = app.node.tryGetContext('region');
+const account = app.node.tryGetContext('account');
+const stackID = 'cloud-cost-auditor-' + stage;
+
+new CloudCostAuditorStack(app, stackID, {
+  env: { account: account, region: region }
 });

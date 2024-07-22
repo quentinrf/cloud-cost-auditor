@@ -24,6 +24,11 @@ jobs:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/configure
       - uses: ./.github/actions/build-go
+      - uses: ./.github/actions/cdk-synth
+        with:
+          stage: alpha
+          region: ${{ matrix.region }}
+          account: ${{ secrets.ACCOUNT }}
     permissions:
       id-token: write # This is required for requesting the JWT
       contents: read # This is required for actions/checkout

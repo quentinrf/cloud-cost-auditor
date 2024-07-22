@@ -16,19 +16,19 @@ export class CloudCostAuditorStack extends cdk.Stack {
     const ruleSetLambda = new Lambda(this, 'RuleSetLambda', {
       runtime: lambda.Runtime.PROVIDED_AL2,
       handler: 'main',
-      code: lambda.Code.fromAsset(path.join(__dirname, '../artifacts/ruleSetLambda.zip')),
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../bin/ruleset.zip')),
     })
 
     const resourceLambda = new Lambda(this, 'ResourceLambda', {
       runtime: lambda.Runtime.PROVIDED_AL2,
       handler: 'main',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler'))
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../bin/ruleset.zip')),
     });
 
     const actionLambda = new Lambda(this, 'ActionLambda', {
       runtime: lambda.Runtime.PROVIDED_AL2,
       handler: 'main',
-      code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler'))
+      code: lambda.Code.fromAsset(path.join(__dirname, '../../bin/ruleset.zip')),
     });
 
     const dynamodbTable = new DynamoDB(this, 'ResourceTable', {

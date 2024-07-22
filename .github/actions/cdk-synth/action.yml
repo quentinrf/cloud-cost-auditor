@@ -1,0 +1,20 @@
+name: CDK Synth
+description: An action to perform a `cdk synth` to ensure the CDK application can be successfully synthesized.
+
+inputs:
+  stage:
+    description: "Deployment Stage"
+    required: true
+  region:
+    description: "Deployment AWS Region"
+    required: true
+  account:
+    description: "Deployment AWS Account"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: CDK Synth
+      run: cd iac && cdk synth -c stage=${{ inputs.stage }} -c region=${{ inputs.region }} -c account=${{ inputs.account }}
+      shell: bash
