@@ -19,12 +19,20 @@ jobs:
     environment: alpha
     strategy:
       matrix:
-        region: [us-east-2]
+        region: [us-east-1]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/configure
+        with:
+          region: ${{ matrix.region }}
+          role: ${{ secrets.AWS_ROLE }}
       - uses: ./.github/actions/build-go
       - uses: ./.github/actions/cdk-synth
+        with:
+          stage: alpha
+          region: ${{ matrix.region }}
+          account: ${{ secrets.ACCOUNT }}
+      - uses: ./.github/actions/cdk-diff
         with:
           stage: alpha
           region: ${{ matrix.region }}

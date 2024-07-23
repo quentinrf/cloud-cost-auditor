@@ -1,6 +1,14 @@
 name: Configure Environment
 description: Configures the environment, downloads go.mod, and installs tools
 
+inputs:
+  region:
+    description: "Deployment Region"
+    required: true
+  role:
+    description: "IAM Role to assume"
+    required: true
+
 runs:
   using: "composite"
   steps:
@@ -21,3 +29,9 @@ runs:
     - name: Configure Git and Dependencies
       run: make configure
       shell: bash
+    - name: Configure AWS Credentials
+      id: creds
+      uses: aws-actions/configure-aws-credentials@v4
+      with:
+        aws-region: ${{ inputs.region }}
+        role-to-assume: ${{ inputs.role }}

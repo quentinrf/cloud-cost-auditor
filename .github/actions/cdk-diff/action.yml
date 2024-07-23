@@ -1,0 +1,20 @@
+name: CDK Diff
+description: Executes the `cdk diff` command to present the template diff as an annotation in GitHub Actions
+
+inputs:
+  stage:
+    description: "Deployment Stage"
+    required: true
+  region:
+    description: "Deployment AWS Region"
+    required: true
+  account:
+    description: "Deployment AWS Account"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: CDK Diff
+      run: cd iac && cdk diff -c stage=${{ inputs.stage }} -c region=${{ inputs.region }} -c account=${{ inputs.account }}
+      shell: bash
