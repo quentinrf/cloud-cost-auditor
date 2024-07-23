@@ -1,0 +1,20 @@
+name: CDK Deploy
+description: Executes the `cdk deploy` command to deploy the CDK Application to AWS
+
+inputs:
+  stage:
+    description: "Deployment Stage"
+    required: true
+  region:
+    description: "Deployment AWS Region"
+    required: true
+  account:
+    description: "Deployment AWS Account"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: CDK Deploy
+      run: cd iac && cdk deploy -c stage=${{ inputs.stage }} -c region=${{ inputs.region }} -c account=${{ inputs.account }} --require-approval never
+      shell: bash
