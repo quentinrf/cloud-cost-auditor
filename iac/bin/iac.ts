@@ -11,5 +11,6 @@ const account = app.node.tryGetContext('account');
 const stackID = 'cloud-cost-auditor-' + stage;
 
 new CloudCostAuditorStack(app, stackID, {
-  env: { account: account, region: region }
+  env: { account: account, region: region },
+  stage: stage,
 });

@@ -18,6 +18,7 @@ export class Lambda extends lambda.Function {
             logGroup: new logs.LogGroup(scope, id+'-LogGroup', {
                 retention: logs.RetentionDays.TWO_WEEKS,
                 logGroupName: id+'-log-group',
+                removalPolicy: cdk.RemovalPolicy.DESTROY,
             }),
             role: new iam.Role(scope, id+'-role', {
                 assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),

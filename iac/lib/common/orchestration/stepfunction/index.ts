@@ -18,6 +18,7 @@ export class StateMachine extends sfn.StateMachine {
                 destination: new logs.LogGroup(scope, id+'-LogGroup', {
                     retention: logs.RetentionDays.TWO_WEEKS,
                     logGroupName: id+'-log-group',
+                    removalPolicy: cdk.RemovalPolicy.DESTROY,
                 }),
                 level: sfn.LogLevel.ALL,
             },
