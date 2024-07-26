@@ -14,9 +14,8 @@ export class RestApi extends apigateway.RestApi {
         super(scope, id, {
             ...props,
             deployOptions: {
-                accessLogDestination: new apigateway.LogGroupLogDestination(new logs.LogGroup(scope, id+'-LogGroup', {
+                accessLogDestination: new apigateway.LogGroupLogDestination(new logs.LogGroup(scope, id+'-AccessLogGroup', {
                     retention: logs.RetentionDays.TWO_WEEKS,
-                    logGroupName: id+'-log-group',
                     removalPolicy: cdk.RemovalPolicy.DESTROY,
                 }),),
                 stageName: props.stage,

@@ -19,7 +19,7 @@ func (h *Handler) Handle(ctx context.Context, req events.APIGatewayProxyRequest)
 		"message": "RuleSet Lambda OKAY",
 	}
 
-	respBodyJson, err := json.MarshalIndent(respBody, "", "\t")
+	respBodyJson, err := json.Marshal(respBody)
 	if err != nil {
 		panic(err)
 	}

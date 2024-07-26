@@ -17,11 +17,11 @@ export class Lambda extends lambda.Function {
             timeout: cdk.Duration.seconds(30),
             logGroup: new logs.LogGroup(scope, id+'-LogGroup', {
                 retention: logs.RetentionDays.TWO_WEEKS,
-                logGroupName: id+'-log-group',
                 removalPolicy: cdk.RemovalPolicy.DESTROY,
             }),
-            role: new iam.Role(scope, id+'-role', {
+            role: new iam.Role(scope, id+'-Role', {
                 assumedBy: new iam.ServicePrincipal('lambda.amazonaws.com'),
+                managedPolicies: [iam.ManagedPolicy.fromAwsManagedPolicyName('service-role/AWSLambdaBasicExecutionRole')],
             }),
             loggingFormat: lambda.LoggingFormat.JSON,
         })

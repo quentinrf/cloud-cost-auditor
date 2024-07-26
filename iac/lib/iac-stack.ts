@@ -56,13 +56,15 @@ export class CloudCostAuditorStack extends cdk.Stack {
 
     const ruleSetLambda = new Lambda(this, 'RuleSetLambda', {
       runtime: lambda.Runtime.PROVIDED_AL2,
-      handler: 'main',
+      handler: 'bootstrap',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../bin/ruleset.zip')),
     })
 
     const ruleSetLambdaIntegration = new apigateway.LambdaIntegration(ruleSetLambda);
     const ruleSetResource = rootPath.addResource('ruleset')
-    const ruleSetMethod = ruleSetResource.addMethod('GET', ruleSetLambdaIntegration)
+    const ruleSetMethod = ruleSetResource.addMethod('GET', ruleSetLambdaIntegration, {
+      authorizationType: apigateway.AuthorizationType.IAM,
+    })
 
     ruleSetLambda.addPermission('AllowApiGatewayInvocation', {
       principal: new ServicePrincipal('apigateway.amazonaws.com'),
@@ -71,13 +73,13 @@ export class CloudCostAuditorStack extends cdk.Stack {
 
     const resourceLambda = new Lambda(this, 'ResourceLambda', {
       runtime: lambda.Runtime.PROVIDED_AL2,
-      handler: 'main',
+      handler: 'bootstrap',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../bin/ruleset.zip')),
     });
 
     const actionLambda = new Lambda(this, 'ActionLambda', {
       runtime: lambda.Runtime.PROVIDED_AL2,
-      handler: 'main',
+      handler: 'bootstrap',
       code: lambda.Code.fromAsset(path.join(__dirname, '../../bin/ruleset.zip')),
     });    
   }
