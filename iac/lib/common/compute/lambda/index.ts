@@ -13,7 +13,7 @@ export class Lambda extends lambda.Function {
     constructor(scope: cdk.Stack, id: string, props: LambdaProps){
         super(scope, id, {
             ...props,
-            architecture: lambda.Architecture.ARM_64,
+            // architecture: lambda.Architecture.ARM_64,
             timeout: cdk.Duration.seconds(30),
             logGroup: new logs.LogGroup(scope, id+'-LogGroup', {
                 retention: logs.RetentionDays.TWO_WEEKS,

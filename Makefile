@@ -1,13 +1,15 @@
 .PHONY: build configure test clean
 
-LAMBDA_FUNCTIONS = ruleset
+LAMBDA_FUNCTIONS = \
+		ruleset \
+		resource
 
 build:
 	make clean
 	mkdir -p ./bin
 	
 	for func in ${LAMBDA_FUNCTIONS} ; do \
-		GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -buildmode pie \
+		GOOS=linux GOARCH=amd64 go build -tags lambda.norpc -buildmode pie -ldflags "-s -w -extldflags '-static' -linkmode=external" \
 		-o bin/bootstrap functions/$$func/*.go ; \
 		cd bin && zip $$func.zip bootstrap && cd .. ; \
 	done
