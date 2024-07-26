@@ -15,6 +15,7 @@ import {
   AccountPrincipal,
   PolicyDocument,
   PolicyStatement,
+  ServicePrincipal,
 } from "aws-cdk-lib/aws-iam";
 
 interface CloudCostAuditorStackProps extends cdk.StackProps {
@@ -62,6 +63,11 @@ export class CloudCostAuditorStack extends cdk.Stack {
     const ruleSetLambdaIntegration = new apigateway.LambdaIntegration(ruleSetLambda);
     const ruleSetResource = rootPath.addResource('ruleset')
     const ruleSetMethod = ruleSetResource.addMethod('GET', ruleSetLambdaIntegration)
+
+    ruleSetLambda.addPermission('AllowApiGatewayInvocation', {
+      principal: new ServicePrincipal('apigateway.amazonaws.com'),
+      sourceArn: restApi.arnForExecuteApi('*')
+    })
 
     const resourceLambda = new Lambda(this, 'ResourceLambda', {
       runtime: lambda.Runtime.PROVIDED_AL2,
