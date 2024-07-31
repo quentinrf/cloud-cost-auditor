@@ -1,0 +1,5 @@
+name: Rule Name
+description: Rule Description
+exceptions: List of CloudFormation resource name exceptions against the defined rule
+resource: CloudFormation resource type this rule acts on
+rule: rule is a golang statement which can be used to evaluate a resource

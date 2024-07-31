@@ -1,0 +1,8 @@
+name: Old Stacks
+description: Rule that dictates that CloudFormation Stacks older than 7 days that are not apart of the exceptions list should be deleted.
+exceptions:
+  - cloud-cost-auditor-alpha
+  - cloud-cost-auditor-staging
+  - cloud-cost-auditor
+resource: AWS::CloudFormation::Stack
+rule: (time.Now() - resource.CreationTime) > 7
